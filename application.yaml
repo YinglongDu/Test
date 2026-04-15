@@ -1,0 +1,72 @@
+application:
+  camera_info:
+    from_file:
+      camera_path: /ssd/CameraInfos/vw_hefei_zl
+    load_from:
+    - mall_config
+    mall_config:
+      ip_port: mall-config:8080
+      site_id: vw_hefei_zl
+      ttl: 25920000
+  interface:
+    grpc:
+      server:
+        address: 0.0.0.0:20200
+    kafka:
+      brokers: kafka:9092
+      group_id: pid-merge
+      mapping_update_topic: mapping-update
+      topics:
+        clusters: buc-clusters
+    methods:
+    - grpc
+    - kafka
+  logger:
+    backup_hour: 5
+    backup_mintue: 1
+    level: info
+    logdir: /data/log/
+    max_files: 100
+  pid_merge:
+    companion_reid_feat_dim: 256
+    companion_reid_thd: 0.45
+    face_dist_need_with_score: 0.55
+    face_dist_need_alone: 0.3
+    face_p_value: 10
+    conflict_checker:
+      overlap_dist_max: 10.0
+      same_channel_overlap_max: 5.0
+      speed_max: 10.0
+      time_diff_thd: 6
+    debug: false
+    en_proposals_traj_check: false
+    min_pid_num: 5
+    model_name: sf_model_bpid_improv_event_mall_rank_vt_reid_mul_930_train_by_750_3_dates.pth
+    pid_manager:
+      ann_max_distance: 2
+      ann_model: fg_body
+      ann_topk: 10
+      fg_feature_dim: 256
+      max_rank: 50
+      mean_dist_thd: 0.2
+      prob_thd: 0.01
+      scaling: 32
+      sort_by_prob: false
+    pixel_to_meter_ratio: 19.56
+    process_period: 10
+    score_fusion_score_thd: 0.998
+    service_ip:
+      close_contact: close-contact:20200
+      clustering_manager: gallery-kitty:20200
+      event: event:20200
+      id_manager: id-manager:20200
+      trajectory_gallery: trajectory-gallery:20200
+  prometheus:
+    name_prefix: PidMerge
+    port: 10010
+  redis:
+    address: tcp://redis:6379
+    key: iampasswd
+    ttl: 14400
+  server:
+    address: 0.0.0.0:20200
